@@ -1,4 +1,4 @@
-# promjax: Prominence model with 1D hydrodynamics in a self-similarly expanding loop
+# promjax: Prominence model with 1D hydrodynamics in expanding loop
 
 ## Filament Model
 
