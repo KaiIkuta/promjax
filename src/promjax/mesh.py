@@ -73,7 +73,6 @@ def mesh():
 
     return v_full
 
-    # 奇数インデックス: 中点補間
-    # w(2*i+1) は 0.5*(v(i)+v(i+1)) の位置にあるとみなす
+
     v_mid = 0.5 * (v_coarse[:-1] + v_coarse[1:])
     v_full = v_full.at[1::2].set(v_mid)
