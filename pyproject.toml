@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "promjax"
+version = "0.1.0"
+description = "Prominence model with 1D hydrodynamics in JAX"
+authors = [
+    { name = "Kai Ikuta" }
+]
+requires-python = ">=3.8"
+
+dependencies = [
+    "jax",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
