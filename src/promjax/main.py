@@ -3,35 +3,49 @@ import time
 import numpy as np
 import jax.numpy as jnp
 
-from .init import grid_size, nmax, per, dt, hs, cs, gam, fac
+from .param import hs, cs, gam, get_config
 from .mesh import mesh
 from .fcn import get_hydro_initial, get_cfl
 from .fld import time_step
 
 
-def run_simulation(save_dir=None, fn=None):
+def run_simulation(params=None, save_dir=None, fn=None):
+
+    cfg, meta = get_config(params)
+
+    grid_size = meta["grid_size"]
+    nmax = meta["nmax"]
+    per = meta["per"]
+    fac = meta["fac"]
+    dt = cfg["dt"]
+
     print("Simulation Start (JAX/GPU)")
     print(f"Grid size: {grid_size}, Max steps: {nmax}")
+    print(
+        f"Parameters: vtop={meta['vtop']}, "
+        f"vmin={cfg['vmin']}, vmax={cfg['vmax']}, "
+        f"yint={meta['yint']}, a={meta['a']}"
+    )
 
-    v_full, dx_full = mesh()
-    w = get_hydro_initial(v_full)
+    v_full, dx_full = mesh(cfg, meta)
+    w = get_hydro_initial(v_full, cfg)
 
     start_time = time.time()
     t_current = 0.0
     history = []
 
     print("Compiling JIT functions...")
-    _ = time_step(w, v_full, dx_full, 0.0)
+    _ = time_step(w, v_full, dx_full, 0.0, cfg)
     print("Compilation finished.")
 
     current_w = w
     for n in range(0, int(nmax) + 1):
         if n % per == 0:
             elapsed = time.time() - start_time
-            cfl_val = float(get_cfl(current_w[0::2], v_full[0::2], t_current, dx_full[0::2]))
+            cfl_val = float(get_cfl(current_w[0::2], v_full[0::2], t_current, dx_full[0::2], cfg))
             mv = float(jnp.max(current_w[:, 1] / current_w[:, 0]))
             print(
-                f"Step {n:6d} | t={t_current*hs/cs:.4f} | "
+                f"Step {n:8d} | t={t_current*hs/cs:.4f} | "
                 f"CFL={cfl_val:.4f} | MaxV={mv:.4f} | Time={elapsed:.2f}s"
             )
 
@@ -40,11 +54,11 @@ def run_simulation(save_dir=None, fn=None):
                 np.array(current_w[:, 0]),
                 np.array(current_w[:, 1] / current_w[:, 0]),
                 np.array(
-                    (gam - 1) * (current_w[:, 2] - 0.5 * current_w[:, 1]**2 / current_w[:, 0])
+                    (gam - 1.0) * (current_w[:, 2] - 0.5 * current_w[:, 1]**2 / current_w[:, 0])
                 ),
             ))
 
-        current_w = time_step(current_w, v_full, dx_full, t_current)
+        current_w = time_step(current_w, v_full, dx_full, t_current, cfg)
         t_current += dt
 
     t_data = np.array([h[0] for h in history])
@@ -63,7 +77,3 @@ def run_simulation(save_dir=None, fn=None):
         print(f"Saved CSV files to: {save_dir}")
 
     return t_data, rho_data, vs_data, p_data, v_data
-
-
-if __name__ == "__main__":
-    run_simulation(save_dir="./output")
