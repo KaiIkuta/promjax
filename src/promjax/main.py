@@ -9,7 +9,7 @@ from .fcn import get_hydro_initial, get_cfl
 from .fld import time_step
 
 
-def run_simulation(save_dir=None):
+def run_simulation(save_dir=None, fn=None):
     print("Simulation Start (JAX/GPU)")
     print(f"Grid size: {grid_size}, Max steps: {nmax}")
 
