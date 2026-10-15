@@ -1,6 +1,6 @@
 import jax.numpy as jnp
 from jax import jit
-from .init import dt, av, dv
+from .param import dt, av, dv
 from .fcn import get_flux, get_parameters
 
 @jit
