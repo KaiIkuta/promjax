@@ -3,7 +3,7 @@ import numpy as np
 from .param import pi, get_config
 
 
-def calc_post_quantities(t_data, v_data, vs_data, params=None, save_dir=None, fn=Bone):
+def calc_post_quantities(t_data, v_data, vs_data, params=None, save_dir=None, fn=None):
 
     cfg, _ = get_config(params)
     yint = cfg["yint"]
