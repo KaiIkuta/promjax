@@ -1,5 +1,5 @@
 import jax.numpy as jnp
-from .init import imax, dn, grid_size, a, yint, pi
+from .param import imax, dn, grid_size, a, yint, pi
 
 def mesh():
 
