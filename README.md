@@ -1,5 +1,27 @@
 # promjax: Prominence model with 1D hydrodynamics
 
+
+```bash
+pip install git+https://github.com/KaiIkuta/promjax.git
+```
+
+
+```python
+from promjax import run_simulation
+
+t_data, rho_data, vs_data, p_data, v_data = run_simulation(
+    params={
+        "vtop": 150.0,
+        "vmin": 0.35,
+        "vmax": 0.75,
+        "yint": 50000.0,
+        "a": 12500.0,
+    },
+    save_dir="Directory",
+    fn="File_Prefix"
+)
+```
+
 ## Filament Model
 
 
