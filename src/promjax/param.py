@@ -37,9 +37,8 @@ def get_config(params=None):
     dn = float(p.get("dn", 0.0001000 / 4.0 / fac))
     dt = float(p.get("dt", 0.0001 / fac / 10.0 / 4.0))
     per = int(p.get("per", 1000 * fac * 10 * 4))
-    nmax = int(p.get("nmax", 2000 * 125 * fac * 7 * 3 * 4))
+    nmax = int(p.get("nmax", 21000000 * fac))
     grid_size = int(p.get("grid_size", 2 * imax + 1))
-
 
     vtop_norm = float(p["vtop"] * 1000.0 / cs)
     yint_norm = float(p["yint"] * 1000.0 / hs)
