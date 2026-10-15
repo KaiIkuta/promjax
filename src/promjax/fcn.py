@@ -1,6 +1,6 @@
 import jax.numpy as jnp
 from jax import jit
-from .init import (
+from .param import (
     yint, a, vmax, pi, rs, beta, gm,
     fil_t, fil_b, rhos, gam, dt, uniform_corona
 )
