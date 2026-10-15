@@ -1,6 +1,6 @@
 import os
 import numpy as np
-from .params import pi, get_config
+from .param import pi, get_config
 
 
 def calc_post_quantities(t_data, v_data, vs_data, params=None, save_dir=None, fn=Bone):
