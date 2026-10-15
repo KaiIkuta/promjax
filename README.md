@@ -8,16 +8,25 @@ pip install git+https://github.com/KaiIkuta/promjax.git
 
 ```python
 import promjax
-from promjax import run_simulation
+from promjax import run_simulation, calc_post_quantities
+
+params = {
+    "vtop": 150.0,
+    "vmin": 0.35,
+    "vmax": 0.75,
+    "yint": 50000.0,
+    "a": 12500.0,
+}
 
 t_data, rho_data, vs_data, p_data, v_data = run_simulation(
-    params={
-        "vtop": 150.0,
-        "vmin": 0.35,
-        "vmax": 0.75,
-        "yint": 50000.0,
-        "a": 12500.0,
-    },
+    params=params,
+    save_dir="Directory",
+    fn="File_Prefix"
+)
+
+vx, vy, vn, h, x, y, u = calc_post_quantities(
+    t_data, v_data, vs_data,
+    params=params,
     save_dir="Directory",
     fn="File_Prefix"
 )
