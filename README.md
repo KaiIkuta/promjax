@@ -7,6 +7,7 @@ pip install git+https://github.com/KaiIkuta/promjax.git
 
 
 ```python
+import promjax
 from promjax import run_simulation
 
 t_data, rho_data, vs_data, p_data, v_data = run_simulation(
