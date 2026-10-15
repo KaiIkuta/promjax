@@ -1,16 +1,20 @@
 import jax.numpy as jnp
 from jax import jit
-from .param import dt, av, dv
+from .param import DEFAULT_JAX_CFG
 from .fcn import get_flux, get_parameters
 
+
 @jit
-def time_step(w, v_full, dx_full, t_current):
+def time_step(w, v_full, dx_full, t_current, cfg=DEFAULT_JAX_CFG):
+    dt = cfg["dt"]
+    av = cfg["av"]
+    dv = cfg["dv"]
+
     w_even = w[0::2]
     v_even = v_full[0::2]
 
-
     t_eval = jnp.maximum(t_current - dt, 0.0)
-    f_even, s_even = get_flux(w_even, v_even, t_eval)
+    f_even, s_even = get_flux(w_even, v_even, t_eval, cfg)
 
     dx_odd = dx_full[1::2]
     df = f_even[1:] - f_even[:-1]
@@ -20,7 +24,7 @@ def time_step(w, v_full, dx_full, t_current):
     v_odd = 0.5 * (v_even[1:] + v_even[:-1])
 
 
-    f_odd, s_odd = get_flux(w_odd_new, v_odd, t_current)
+    f_odd, s_odd = get_flux(w_odd_new, v_odd, t_current, cfg)
     dx_main = dx_full[2:-1:2]
     term1 = 0.5 * (f_even[2:] - f_even[:-2])
     term2 = f_odd[1:] - f_odd[:-1]
@@ -49,8 +53,8 @@ def time_step(w, v_full, dx_full, t_current):
 
 
     w_new_odd = w_odd_new
-    h0, _, _, _ = get_parameters(v_even[0], t_current)
-    h4, _, _, _ = get_parameters(v_even[2], t_current)
+    h0, _, _, _ = get_parameters(v_even[0], t_current, cfg)
+    h4, _, _, _ = get_parameters(v_even[2], t_current, cfg)
     hr = h4 / h0
     w_0 = w_inner_new[1] * hr
     w_0 = w_0.at[1].set(-w_0[1])
@@ -60,8 +64,8 @@ def time_step(w, v_full, dx_full, t_current):
     w_2 = w_2.at[1].set(0.0)
     w_2 = w_2.at[2].set(w_2_val)
 
-    h_end, _, _, _ = get_parameters(v_even[-1], t_current)
-    h_prev, _, _, _ = get_parameters(v_even[-2], t_current)
+    h_end, _, _, _ = get_parameters(v_even[-1], t_current, cfg)
+    h_prev, _, _, _ = get_parameters(v_even[-2], t_current, cfg)
     hr_end = h_prev / h_end
     w_end = w_inner_new[-1] * hr_end
 
