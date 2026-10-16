@@ -10,7 +10,7 @@ pip install git+https://github.com/KaiIkuta/promjax.git
 import promjax
 from promjax import run_simulation, calc_post_quantities
 
-params = {
+params = { #Case for Filament eruption on EK Dra (Ikuta & Shibata 2024)
     "a": 25000.0, #km
     "yint": 350000.0, #km
     "vtop": 550.0, #km/s
