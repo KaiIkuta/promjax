@@ -34,8 +34,8 @@ def calc_post_quantities(t_data, v_data, vs_data, params=None, save_dir=None, fn
     cos = np.sinh(v) * np.sin(u)
     fac = np.sqrt(1.0 / (cos * cos + tan * tan))
 
-    vx = fac * (tan * vs_arr + cos * Vn)
-    vy = fac * (-cos * vs_arr + tan * Vn)
+    vx = fac * (tan * vs_arr + cos * vn)
+    vy = fac * (-cos * vs_arr + tan * vn)
 
     x = np.sinh(v) / h
     y = np.sin(u) / h
