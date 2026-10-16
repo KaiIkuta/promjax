@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "promjax"
-version = "0.1.0"
+version = "1.0.0"
 description = "Prominence model with 1D hydrodynamics in JAX"
 authors = [
     { name = "Kai Ikuta" }
