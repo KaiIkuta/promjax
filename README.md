@@ -11,11 +11,11 @@ import promjax
 from promjax import run_simulation, calc_post_quantities
 
 params = {
-    "a": 12500.0, #km
-    "yint": 50000.0, #km
-    "vtop": 150.0, #km/s
-    "vmin": 0.35, 
-    "vmax": 0.75,
+    "a": 25000.0, #km
+    "yint": 350000.0, #km
+    "vtop": 550.0, #km/s
+    "vmin": 0.055, 
+    "vmax": 0.105,
     "tmax": 7200.0 #sec
 }
 
