@@ -11,24 +11,26 @@ import promjax
 from promjax import run_simulation, calc_post_quantities
 
 params = {
-    "vtop": 150.0,
-    "vmin": 0.35,
+    "vtop": 150.0, #km/s
+    "vmin": 0.35, 
     "vmax": 0.75,
-    "yint": 50000.0,
-    "a": 12500.0,
+    "yint": 50000.0, #km
+    "a": 12500.0, #km
+    "tmax": 7200.0 #sec
 }
+
 
 t_data, rho_data, vs_data, p_data, v_data = run_simulation(
     params=params,
-    save_dir="Directory",
-    fn="File_Prefix"
+    save_dir=SAVE_DIRECTORY,
+    fn=FILE_NAME
 )
 
 vx, vy, vn, h, x, y, u = calc_post_quantities(
     t_data, v_data, vs_data,
     params=params,
-    save_dir="Directory",
-    fn="File_Prefix"
+    save_dir=SAVE_DIRECTORY,
+    fn=FILE_NAME
 )
 ```
 
