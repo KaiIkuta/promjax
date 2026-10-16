@@ -45,8 +45,8 @@ def run_simulation(params=None, save_dir=None, fn=None):
             cfl_val = float(get_cfl(current_w[0::2], v_full[0::2], t_current, dx_full[0::2], cfg))
             mv = float(jnp.max(current_w[:, 1] / current_w[:, 0]))
             print(
-                f"Step {n:8d} | t={t_current*hs/cs:.4f} | "
-                f"CFL={cfl_val:.4f} | MaxV={mv:.4f} | Time={elapsed:.2f}s"
+                f"Step {n:8d} | t={t_current*hs/cs:.4f} sec | "
+                f"CFL={cfl_val:.4f} | Max Velocity={mv*cs:.4f} m/sec | Elapsed time={elapsed:.2f} sec"
             )
 
             history.append((
