@@ -45,9 +45,9 @@ def calc_post_quantities(t_data, v_data, vs_data, params=None, save_dir=None, fn
 
     if save_dir is not None:
         os.makedirs(save_dir, exist_ok=True)
-        np.savetxt(os.path.join(save_dir, fn + "_vx.csv"), Vx, delimiter=",")
-        np.savetxt(os.path.join(save_dir, fn + "_vy.csv"), Vy, delimiter=",")
-        np.savetxt(os.path.join(save_dir, fn + "_vn.csv"), Vn, delimiter=",")
+        np.savetxt(os.path.join(save_dir, fn + "_vx.csv"), vx, delimiter=",")
+        np.savetxt(os.path.join(save_dir, fn + "_vy.csv"), vy, delimiter=",")
+        np.savetxt(os.path.join(save_dir, fn + "_vn.csv"), vn, delimiter=",")
         np.savetxt(os.path.join(save_dir, fn + "_h.csv"), h, delimiter=",")
         np.savetxt(os.path.join(save_dir, fn + "_x.csv"), x, delimiter=",")
         np.savetxt(os.path.join(save_dir, fn + "_y.csv"), y, delimiter=",")
