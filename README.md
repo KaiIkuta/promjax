@@ -46,6 +46,6 @@ Application to a prominence eruption on solar-type star ([Namekata, Ikuta et al.
 Application to the solar prominence eruptions ([Ikuta et al., in preparation](https://ui.adsabs.harvard.edu/abs/2024csss.confE.100I/abstract))
 
 
-### Erratum and Remarks (as of 24/04/04)
+## Erratum and Remarks (as of 24/04/04)
 
 Page 2: In Equation 4, adiabatic index $\gamma=5/3$
