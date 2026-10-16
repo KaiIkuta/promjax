@@ -19,7 +19,7 @@ DEFAULT_BASE_PARAMS = {
     "yint": 50000.0,  # km
     "a": 12500.0,     # km
     "beta": 0.0,      # deg
-    "tmax": 7200.0,   # s (計算期間)
+    "tmax": 7200.0,   # sec
     "rhos": 1.0,
     "av": 1.0,
     "dv": 0.001,
