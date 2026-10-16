@@ -3,7 +3,6 @@ import jax.numpy as jnp
 
 jax.config.update("jax_enable_x64", True)
 
-
 hs = 606452.168665969
 cs = 12895.319009743993
 rs = 695700000.0 / hs
@@ -20,6 +19,7 @@ DEFAULT_BASE_PARAMS = {
     "yint": 50000.0,  # km
     "a": 12500.0,     # km
     "beta": 0.0,      # deg
+    "tmax": 7200.0,   # s (計算期間)
     "rhos": 1.0,
     "av": 1.0,
     "dv": 0.001,
@@ -27,7 +27,6 @@ DEFAULT_BASE_PARAMS = {
 
 
 def get_config(params=None):
-
     p = DEFAULT_BASE_PARAMS.copy()
     if params is not None:
         p.update(params)
@@ -37,14 +36,15 @@ def get_config(params=None):
     dn = float(p.get("dn", 0.0001000 / 4.0 / fac))
     dt = float(p.get("dt", 0.0001 / fac / 10.0 / 4.0))
     per = int(p.get("per", 1000 * fac * 10 * 4))
-    nmax = int(p.get("nmax", 21000000 * fac))
+
+    tmax_norm = float(p["tmax"] * cs / hs)
+    nmax = int(p.get("nmax", jnp.ceil(tmax_norm / dt / per) * per))
     grid_size = int(p.get("grid_size", 2 * imax + 1))
 
     vtop_norm = float(p["vtop"] * 1000.0 / cs)
     yint_norm = float(p["yint"] * 1000.0 / hs)
     a_norm = float(p["a"] * 1000.0 / hs)
     beta_rad = float(p["beta"] * float(pi) / 180.0)
-
 
     jax_cfg = {
         "vmin": float(p["vmin"]),
@@ -60,12 +60,12 @@ def get_config(params=None):
         "dn": dn,
     }
 
-
     meta_cfg = {
         "vtop": float(p["vtop"]),
         "yint": float(p["yint"]),
         "a": float(p["a"]),
         "beta": float(p["beta"]),
+        "tmax": float(p["tmax"]),
         "fac": fac,
         "imax": imax,
         "per": per,
@@ -74,5 +74,6 @@ def get_config(params=None):
     }
 
     return jax_cfg, meta_cfg
+
 
 DEFAULT_JAX_CFG, DEFAULT_META_CFG = get_config()
