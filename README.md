@@ -1,4 +1,4 @@
-# promjax: Prominence model with 1D hydrodynamics
+# promjax: Hydrodynamic model of prominence eruption with JAX
 
 
 ```bash
